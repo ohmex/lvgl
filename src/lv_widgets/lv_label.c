@@ -266,12 +266,12 @@ void lv_label_set_text_fmt(lv_obj_t * label, const char * fmt, ...)
     }
 
     if(ext->text != NULL && ext->static_txt == 0) {
-    	lv_mem_free(ext->text);
-    	ext->text = NULL;
+        lv_mem_free(ext->text);
+        ext->text = NULL;
     }
 
     va_list args;
-    va_start (args, fmt);
+    va_start(args, fmt);
     ext->text = _lv_txt_set_text_vfmt(fmt, args);
     va_end(args);
     ext->static_txt = 0; /*Now the text is dynamically allocated*/
@@ -1175,7 +1175,7 @@ void lv_label_refr_text(lv_obj_t * label)
             p.y = lv_area_get_height(&txt_coords);
             y_overed = p.y %
                        (lv_font_get_line_height(font) + line_space); /*Round down to the last line*/
-            if (y_overed >= lv_font_get_line_height(font)) {
+            if(y_overed >= lv_font_get_line_height(font)) {
                 p.y -= y_overed;
                 p.y += lv_font_get_line_height(font);
             }
@@ -1191,7 +1191,7 @@ void lv_label_refr_text(lv_obj_t * label)
             size_t txt_len = strlen(ext->text);
             uint32_t byte_id     = _lv_txt_encoded_get_byte_id(ext->text, letter_id);
             while(byte_id + LV_LABEL_DOT_NUM > txt_len) {
-                byte_id -= _lv_txt_encoded_size(&ext->text[byte_id]);
+                _lv_txt_encoded_prev(ext->text, &byte_id);
                 letter_id--;
             }
 
